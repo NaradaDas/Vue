@@ -9,27 +9,38 @@
     <span class="catalog__price">{{ product.price }} ₽</span>
     <ul class="colors colors--black">
       <li class="colors__item">
-        <label for="name" class="colors__label">
+        <label :for="btnId[0]" class="colors__label">
           <input
-            id="name"
+            :id="btnId[0]"
             class="colors__radio sr-only"
             type="radio"
-            name="color-1"
-            value="#73B6EA"
-            checked=""
+            value="#73b6ea"
+            v-model="color"
           />
           <span class="colors__value" style="background-color: #73b6ea"> </span>
         </label>
       </li>
       <li class="colors__item">
-        <label for="name" class="colors__label">
-          <input class="colors__radio sr-only" type="radio" name="color-1" value="#8BE000" />
+        <label :for="btnId[1]" class="colors__label">
+          <input
+            :id="btnId[1]"
+            class="colors__radio sr-only"
+            type="radio"
+            v-model="color"
+            value="#8be000"
+          />
           <span class="colors__value" style="background-color: #8be000"> </span>
         </label>
       </li>
       <li class="colors__item">
-        <label for="name" class="colors__label">
-          <input class="colors__radio sr-only" type="radio" name="color-1" value="#222" />
+        <label :for="btnId[2]" class="colors__label">
+          <input
+            :id="btnId[2]"
+            class="colors__radio sr-only"
+            type="radio"
+            v-model="color"
+            value="#222"
+          />
           <span class="colors__value" style="background-color: #222"> </span>
         </label>
       </li>
@@ -39,6 +50,13 @@
 
 <script>
 export default {
+  data() {
+    return {
+      color: '#73b6ea',
+      btnId: [`${this.product.id}1`, `${this.product.id}2`, `${this.product.id}3`],
+    };
+  },
   props: ['product', 'index'],
+  emits: ['update:modelValue'],
 };
 </script>
