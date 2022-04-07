@@ -168,6 +168,7 @@ import categories from '../data/categories';
 import colors from '../data/colors';
 
 export default {
+
   data() {
     return {
       currentPriceFrom: 0,
