@@ -1,9 +1,8 @@
 import { createApp } from 'vue';
+import mitt from 'mitt';
 import App from './App.vue';
-// import showMessage from './js/alert';
-// import { messageFirst, messageSecond } from './js/messages';
 
-createApp(App).mount('#app');
-
-// showMessage(messageFirst);
-// showMessage(messageSecond);
+const emitter = mitt();
+const app = createApp(App);
+app.config.globalProperties.emitter = emitter;
+app.mount('#app');
