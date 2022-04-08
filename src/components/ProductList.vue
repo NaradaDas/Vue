@@ -1,7 +1,11 @@
 <template lang="">
-    <ul class="catalog__list">
-        <ProductItem v-for="(product) in products" :product="product" :key="product.id"/>
-    </ul>
+  <ul class="catalog__list">
+    <ProductItem
+      v-for="product in products"
+      :product="product"
+      :key="product.id"
+    />
+  </ul>
 </template>
 
 <script>

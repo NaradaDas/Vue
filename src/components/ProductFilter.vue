@@ -174,6 +174,8 @@ export default {
       currentPriceTo: 0,
       currentCategoryId: 0,
       currentColorId: 0,
+      categories,
+      colors,
     };
   },
   props: ['priceFrom', 'priceTo', 'categoryId', 'colorId', 'page'],
@@ -184,14 +186,6 @@ export default {
     'update:colorId',
     'update:page',
   ],
-  computed: {
-    categories() {
-      return categories;
-    },
-    colors() {
-      return colors;
-    },
-  },
   watch: {
     priceFrom(value) {
       this.currentPriceFrom = value;
