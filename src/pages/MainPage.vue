@@ -2,7 +2,7 @@
   <main class="content container">
     <div class="content__top content__top--catalog">
       <h1 class="content__title">Каталог</h1>
-      <span class="content__info"> 152 товара </span>
+      <span class="content__info"> {{ totalAmount }} </span>
     </div>
 
     <div class="content__catalog">
@@ -29,6 +29,8 @@ import products from '@/data/products';
 import ProductList from '@/components/ProductList.vue';
 import BasePagination from '@/components/BasePagination.vue';
 import ProductFilter from '@/components/ProductFilter.vue';
+import totalProductsNumber from '@/helpers/totalProductsNumber';
+
 // import axios from 'axios';
 
 export default {
@@ -79,6 +81,9 @@ export default {
 
       return filteredProducts;
     },
+    total() {
+      return products.length;
+    },
     products() {
       const offset = (this.page - 1) * this.productsPerPage;
       return this.filteredProducts.slice(offset, offset + this.productsPerPage);
@@ -86,6 +91,10 @@ export default {
     },
     countProducts() {
       return this.filteredProducts.length;
+    },
+    totalAmount() {
+      const quantity = this.countProducts;
+      return totalProductsNumber(quantity);
     },
   },
   // created() {

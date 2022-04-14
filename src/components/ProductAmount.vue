@@ -6,7 +6,7 @@
       </svg>
     </button>
 
-    <label for="count">
+    <label for="count" style="border-right: 1px solid #cfcfcf; border-left: 1px solid #cfcfcf">
       <input id="count" type="number" name="count" v-model.number="amount" />
     </label>
 
