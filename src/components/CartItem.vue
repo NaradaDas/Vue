@@ -7,7 +7,7 @@
 
     <span class="product__code"> Артикул: {{ item.productId }} </span>
 
-    <div class="product__counter form__counter">
+    <!-- <div class="product__counter form__counter">
       <button type="button" aria-label="Убрать один товар" @click="minusProduct(item.productId)">
         <svg width="10" height="10" fill="currentColor">
           <use xlink:href="#icon-minus"></use>
@@ -22,7 +22,9 @@
           <use xlink:href="#icon-plus"></use>
         </svg>
       </button>
-    </div>
+    </div> -->
+
+    <ProductAmount class="product__counter" v-model:productAmount="amount" />
 
     <b class="product__price"> {{ $filters.numberFormat(item.amount * item.product.price) }} ₽ </b>
 
@@ -40,8 +42,10 @@
 </template>
 <script>
 import { mapMutations } from 'vuex';
+import ProductAmount from '@/components/ProductAmount.vue';
 
 export default {
+  components: { ProductAmount },
   props: ['item'],
   computed: {
     amount: {
@@ -55,9 +59,14 @@ export default {
         });
       },
     },
+
   },
   methods: {
-    ...mapMutations({ deleteProduct: 'deleteCartProduct', minusProduct: 'minusCartProduct', plusProduct: 'plusCartProduct' }),
+    ...mapMutations({
+      deleteProduct: 'deleteCartProduct',
+      minusProduct: 'minusCartProduct',
+      plusProduct: 'plusCartProduct',
+    }),
   },
 };
 </script>
