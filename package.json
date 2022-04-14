@@ -1,5 +1,5 @@
 {
-  "name": "newvue",
+  "name": "second",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -11,9 +11,7 @@
     "core-js": "^3.8.3",
     "mitt": "^3.0.0",
     "vue": "^3.2.13",
-    "vue-intl": "^6.2.0",
-    "vue-router": "^4.0.14",
-    "vuex": "^4.0.2"
+    "vue-intl": "^6.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
