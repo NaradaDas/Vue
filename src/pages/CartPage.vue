@@ -11,7 +11,7 @@
       </ul>
 
       <h1 class="content__title">Корзина</h1>
-      <span class="content__info"> {{ countProductWordForms }} </span>
+      <span class="content__info"> 3 товара </span>
     </div>
 
     <section class="cart">
@@ -41,23 +41,6 @@ import CartItem from '@/components/CartItem.vue';
 export default {
   computed: {
     ...mapGetters({ products: 'cartDetailProducts', totalPrice: 'cartTotalPrice' }),
-    countProductWordForms() {
-      const totalAmount = this.products.reduce((acc, product) => (product.amount + acc), 0);
-      if (String(totalAmount).endsWith('1')) {
-        return `${totalAmount} товар`;
-      }
-      if (
-        String(totalAmount).endsWith('2')
-        || String(totalAmount).endsWith('3')
-        || String(totalAmount).endsWith('4')
-      ) {
-        return `${totalAmount} товара`;
-      }
-      if (this.products.length === 0) {
-        return 'Корзина пуста';
-      }
-      return `${totalAmount} товаров`;
-    },
   },
   components: { CartItem },
 };

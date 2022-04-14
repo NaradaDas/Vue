@@ -1,12 +1,12 @@
 <template lang="">
   <li class="catalog__item">
-    <router-link class="catalog__pic"  :to="{ name: 'product', params: {id: product.id}}">
+    <a class="catalog__pic" href="#" @click.prevent="gotoPage('product', product.id)">
       <img style="object-fit: contain" :src="product.image" :alt="product.title" />
-    </router-link>
+    </a>
     <h3 class="catalog__title">
       <a href="#">{{ product.title }}</a>
     </h3>
-    <span class="catalog__price">{{ $filters.numberFormat(product.price) }} ₽</span>
+    <span class="catalog__price">{{ numberFormat }} ₽</span>
     <ul class="colors colors--black">
       <li class="colors__item">
         <label :for="btnId[0]" class="colors__label">

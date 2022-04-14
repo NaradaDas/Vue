@@ -17,7 +17,9 @@
         />
       </aside>
       <section class="catalog">
-        <ProductList :products="products" />
+        <ProductList
+          :products="products"
+        />
         <BasePagination :count="countProducts" :per-page="productsPerPage" v-model:page="page" />
       </section>
     </div>
@@ -29,7 +31,6 @@ import products from '@/data/products';
 import ProductList from '@/components/ProductList.vue';
 import BasePagination from '@/components/BasePagination.vue';
 import ProductFilter from '@/components/ProductFilter.vue';
-// import axios from 'axios';
 
 export default {
   components: { ProductList, BasePagination, ProductFilter },
@@ -41,16 +42,8 @@ export default {
       filterColorId: 0,
       page: 1,
       productsPerPage: 3,
-      // productsData: null,
     };
   },
-  // methods: {
-  //   loadProducts() {
-  //     axios.get('https://vue-study.skillbox.cc/api/products').then((response) => {
-  //       this.productsData = response.data;
-  //     });
-  //   },
-  // },
   computed: {
     filteredProducts() {
       let filteredProducts = products;
@@ -82,14 +75,10 @@ export default {
     products() {
       const offset = (this.page - 1) * this.productsPerPage;
       return this.filteredProducts.slice(offset, offset + this.productsPerPage);
-      // return this.productsData ? this.productsData.items : [];
     },
     countProducts() {
       return this.filteredProducts.length;
     },
   },
-  // created() {
-  //   this.loadProducts();
-  // },
 };
 </script>
