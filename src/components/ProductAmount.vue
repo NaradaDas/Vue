@@ -6,8 +6,8 @@
       </svg>
     </button>
 
-    <label for="count" style="border-right: 1px solid #cfcfcf; border-left: 1px solid #cfcfcf">
-      <input id="count" type="number" name="count" v-model.number="amount" />
+    <label for="count">
+      <input id="count" type="number" name="count" placeholder="1" v-model.number="amount" />
     </label>
 
     <button type="button" aria-label="Добавить один товар" @click.prevent="amount += 1">
@@ -27,7 +27,9 @@ export default {
         return this.productAmount;
       },
       set(value) {
-        if (value) this.$emit('update:productAmount', value);
+        if (value) {
+          this.$emit('update:productAmount', value);
+        }
       },
     },
   },
