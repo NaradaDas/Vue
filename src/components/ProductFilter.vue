@@ -54,7 +54,7 @@
               :value="color.id"
               v-model.number="currentColorId"
             />
-            <span class="colors__value" :style="color.style"> </span>
+            <span class="colors__value" :style="{ backgroundColor: color.code }"> </span>
           </label>
         </li>
       </ul>
@@ -164,8 +164,9 @@
   </form>
 </template>
 <script>
-import categories from '../data/categories';
-import colors from '../data/colors';
+import axios from 'axios';
+
+import { API_BASE_URL } from '@/config';
 
 export default {
   data() {
@@ -174,8 +175,9 @@ export default {
       currentPriceTo: 0,
       currentCategoryId: 0,
       currentColorId: 0,
-      categories,
-      colors,
+
+      categoriesData: null,
+      colorsData: null,
     };
   },
   props: ['priceFrom', 'priceTo', 'categoryId', 'colorId', 'page'],
@@ -215,6 +217,28 @@ export default {
       this.$emit('update:colorId', 0);
       this.$emit('update:page', 1);
     },
+    loadCategories() {
+      axios.get(`${API_BASE_URL}/api/productCategories`).then((response) => {
+        this.categoriesData = response.data;
+      });
+    },
+    loadColors() {
+      axios.get(`${API_BASE_URL}/api/colors`).then((res) => {
+        this.colorsData = res.data.items;
+      });
+    },
+  },
+  computed: {
+    categories() {
+      return this.categoriesData ? this.categoriesData.items : [];
+    },
+    colors() {
+      return this.colorsData ? this.colorsData : [];
+    },
+  },
+  created() {
+    this.loadCategories();
+    this.loadColors();
   },
 };
 </script>

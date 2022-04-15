@@ -1,38 +1,23 @@
 <template lang="">
   <li class="cart__item product">
     <div class="product__pic">
-      <img :src="item.product.image" width="120" height="120" :alt="item.product.title" />
+      <img :src="product.product.image" width="120" height="120" :alt="product.product.title" />
     </div>
-    <h3 class="product__title">{{ item.product.title }}</h3>
+    <h3 class="product__title">{{ product.product.title }}</h3>
 
-    <span class="product__code"> Артикул: {{ item.productId }} </span>
-
-    <!-- <div class="product__counter form__counter">
-      <button type="button" aria-label="Убрать один товар" @click="minusProduct(item.productId)">
-        <svg width="10" height="10" fill="currentColor">
-          <use xlink:href="#icon-minus"></use>
-        </svg>
-      </button>
-      <label for="count">
-        <input id="count" type="text" placeholder="1" v-model.number="amount" name="count" />
-      </label>
-
-      <button type="button" aria-label="Добавить один товар" @click="plusProduct(item.productId)">
-        <svg width="10" height="10" fill="currentColor">
-          <use xlink:href="#icon-plus"></use>
-        </svg>
-      </button>
-    </div> -->
+    <span class="product__code"> Артикул: {{ product.productId }} </span>
 
     <ProductAmount class="product__counter" v-model:productAmount="amount" />
 
-    <b class="product__price"> {{ $filters.numberFormat(item.amount * item.product.price) }} ₽ </b>
+    <b class="product__price">
+      {{ $filters.numberFormat(product.amount * product.product.price) }} ₽
+    </b>
 
     <button
       class="product__del button-del"
       type="button"
       aria-label="Удалить товар из корзины"
-      @click.prevent="deleteProduct(item.productId)"
+      @click.prevent="deleteProductFromCart(product.productId)"
     >
       <svg width="20" height="20" fill="currentColor">
         <use xlink:href="#icon-close"></use>
@@ -41,32 +26,40 @@
   </li>
 </template>
 <script>
-import { mapMutations } from 'vuex';
+import { mapActions } from 'vuex';
 import ProductAmount from '@/components/ProductAmount.vue';
 
 export default {
   components: { ProductAmount },
   props: ['item'],
+  emits: ['update:item'],
   computed: {
     amount: {
       get() {
-        return this.item.amount;
+        return this.product.amount;
       },
       set(value) {
-        this.$store.commit('updateCartProductAmount', {
-          productId: this.item.productId,
+        this.updateCartProductAmount({
+          productId: this.item.product.id,
           amount: value,
         });
+        this.$emit('update:item', { ...this.item, quantity: value });
       },
     },
-
+    product() {
+      return {
+        ...this.item,
+        productId: this.item.product.id,
+        amount: this.item.quantity,
+        product: {
+          ...this.item.product,
+          image: this.item.product.image.file.url,
+        },
+      };
+    },
   },
   methods: {
-    ...mapMutations({
-      deleteProduct: 'deleteCartProduct',
-      minusProduct: 'minusCartProduct',
-      plusProduct: 'plusCartProduct',
-    }),
+    ...mapActions(['updateCartProductAmount', 'deleteProductFromCart']),
   },
 };
 </script>
