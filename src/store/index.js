@@ -1,19 +1,27 @@
 import { createStore } from 'vuex';
 import axios from 'axios';
 import { API_BASE_URL } from '@/config';
+import totalProductsNumber from '@/helpers/totalProductsNumber';
 
 const store = createStore({
   state: {
-    cartProducts: [
-      { productId: 1, amount: 2 },
-    ],
+    cartProducts: [],
     userAccessKey: null,
     cartProductsData: [],
     cartLoading: false,
     addProductLoading: false,
     cartLoadingFailed: false,
+    sendOrderLoading: false,
+    orderInfo: null,
   },
   mutations: {
+    updateOrderInfo(state, orederInfo) {
+state.orderInfo = orederInfo;
+    },
+    resetCard(state) {
+      state.cartProducts = [];
+      state.cartProductsData = [];
+    },
     updateCartProductAmount(state, { productId, amount }) {
       const item = state.cartProducts.find((product) => product.productId === productId);
 
@@ -51,6 +59,9 @@ const store = createStore({
     turnOfCartLoadingFailed(state) {
       state.cartLoadingFailed = false;
     },
+    changeOrderLoadingStatus(state) {
+      state.sendOrderLoading = !state.sendOrderLoading;
+    }
   },
   getters: {
     cartDetailProducts(state) {
@@ -73,9 +84,24 @@ const store = createStore({
       return getters.cartDetailProducts.reduce((acc, item) => (item.product
         .price * item.amount + acc), 0);
     },
-
+    cartTotalAmount(state) {
+      const quantity = state.cartProductsData.reduce((acc, product) => product.quantity + acc, 0);
+      return totalProductsNumber(quantity);
+    },
   },
   actions: {
+    loadOrderInfo(context, orderId) {
+      return axios
+      .get(`${API_BASE_URL}/api/orders/${orderId}`, {
+        params: {
+          userAccessKey: context.state.userAccessKey,
+        },
+      })
+      .then(res => {
+        context.commit('updateOrderInfo', res.data)
+        return res.data;
+      } )
+    },
     loadCart(context) {
       context.commit('turnOfCartLoadingFailed');
       context.commit('turnOnCartLoading');
@@ -147,6 +173,30 @@ const store = createStore({
           context.commit('syncCartProducts');
         });
     },
+    loadFilters() {
+      return Promise.all([
+        axios.get(`${API_BASE_URL}/api/colors`),
+        axios.get(`${API_BASE_URL}/api/productCategories`),
+      ]).then((res) => res);
+    },
+    sendOrder(context, formData) {
+      context.commit('changeOrderLoadingStatus');
+      return axios.post(`${API_BASE_URL}/api/orders`, {
+        ...formData,
+      }, {
+        params: {
+          userAccessKey: context.state.userAccessKey,
+        },
+      }
+      )
+        .then(res => {
+          context.commit('resetCard');
+          context.commit('updateOrderInfo', res.data);
+          context.commit('changeOrderLoadingStatus');
+          return res;
+        });
+    },
+
   },
 });
 

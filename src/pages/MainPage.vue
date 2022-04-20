@@ -17,9 +17,9 @@
         />
       </aside>
       <section class="catalog">
-        <div v-if="productsLoading">
-          <img :src="SPINNER_IMG_URL" alt="Прелоадер" />
-        </div>
+
+        <BaseLoadingIndicator :loading="productsLoading" />
+
         <div v-if="productsLoadingFailed">
           Произошла ошибка при загрузке товаров
           <button @click.prevent="loadProducts" type="button">Попробовать еще раз</button>
@@ -35,13 +35,14 @@
 import ProductList from '@/components/ProductList.vue';
 import BasePagination from '@/components/BasePagination.vue';
 import ProductFilter from '@/components/ProductFilter.vue';
+import BaseLoadingIndicator from '@/components/BaseLoadingIndicator.vue';
 import totalProductsNumber from '@/helpers/totalProductsNumber';
 import { API_BASE_URL, SPINNER_IMG_URL } from '@/config';
 
 import axios from 'axios';
 
 export default {
-  components: { ProductList, BasePagination, ProductFilter },
+  components: { ProductList, BasePagination, ProductFilter, BaseLoadingIndicator },
   data() {
     return {
       SPINNER_IMG_URL,

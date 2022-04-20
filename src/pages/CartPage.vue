@@ -14,12 +14,14 @@
       <span class="content__info"> {{ totalAmount }} </span>
     </div>
 
+
+
     <section class="cart">
       <form class="cart__form form" action="#" method="POST">
         <div class="cart__field">
-          <div v-show="cartLoading">
-            <img :src="SPINNER_IMG_URL" alt="Прелоадер" />
-          </div>
+
+<BaseLoadingIndicator :loading="cartLoading" />
+
           <div v-show="cartLoadingFailed">Не удалось загрузить корзину товаров :(</div>
 
           <ul class="cart__list">
@@ -37,7 +39,14 @@
             Итого: <span>{{ $filters.numberFormat(totalPrice) }} ₽</span>
           </p>
 
-          <button class="cart__button button button--primery" type="submit">Оформить заказ</button>
+          <router-link
+          v-if="cartData"
+            tag="button"
+            :to="{name: 'order'}"
+            class="cart__button button button--primery"
+            type="submit"
+            >Оформить заказ</router-link
+          >
         </div>
       </form>
     </section>
@@ -47,13 +56,12 @@
 import { mapGetters, mapActions, mapState } from 'vuex';
 import CartItem from '@/components/CartItem.vue';
 import totalProductsNumber from '@/helpers/totalProductsNumber';
-import { SPINNER_IMG_URL } from '@/config';
+import BaseLoadingIndicator from '@/components/BaseLoadingIndicator.vue';
 
 export default {
   data() {
     return {
       cartData: null,
-      SPINNER_IMG_URL,
     };
   },
   methods: {
@@ -66,11 +74,7 @@ export default {
   },
   computed: {
     ...mapState(['cartProductsData', 'cartLoading', 'addProductLoading', 'cartLoadingFailed']),
-    ...mapGetters({ totalPrice: 'cartTotalPrice' }),
-    totalAmount() {
-      const quantity = this.products.reduce((acc, product) => product.quantity + acc, 0);
-      return totalProductsNumber(quantity);
-    },
+    ...mapGetters({ totalPrice: 'cartTotalPrice', totalAmount: 'cartTotalAmount' }),
     products: {
       get() {
         return this.cartData ? this.cartData : [];
@@ -80,7 +84,7 @@ export default {
       },
     },
   },
-  components: { CartItem },
+  components: { CartItem, BaseLoadingIndicator },
   created() {
     this.loadData();
   },

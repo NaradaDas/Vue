@@ -164,9 +164,7 @@
   </form>
 </template>
 <script>
-import axios from 'axios';
-
-import { API_BASE_URL } from '@/config';
+import { mapActions } from 'vuex';
 
 export default {
   data() {
@@ -203,6 +201,7 @@ export default {
     },
   },
   methods: {
+    ...mapActions(['loadFilters']),
     submit() {
       this.$emit('update:priceFrom', this.currentPriceFrom);
       this.$emit('update:priceTo', this.currentPriceTo);
@@ -217,28 +216,23 @@ export default {
       this.$emit('update:colorId', 0);
       this.$emit('update:page', 1);
     },
-    loadCategories() {
-      axios.get(`${API_BASE_URL}/api/productCategories`).then((response) => {
-        this.categoriesData = response.data;
-      });
-    },
-    loadColors() {
-      axios.get(`${API_BASE_URL}/api/colors`).then((res) => {
-        this.colorsData = res.data.items;
+    loadData() {
+      this.loadFilters().then(([colors, categories]) => {
+        this.categoriesData = categories.data.items;
+        this.colorsData = colors.data.items;
       });
     },
   },
   computed: {
     categories() {
-      return this.categoriesData ? this.categoriesData.items : [];
+      return this.categoriesData ? this.categoriesData : [];
     },
     colors() {
       return this.colorsData ? this.colorsData : [];
     },
   },
   created() {
-    this.loadCategories();
-    this.loadColors();
+    this.loadData();
   },
 };
 </script>

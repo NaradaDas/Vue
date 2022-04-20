@@ -1,7 +1,7 @@
 <template lang="ru">
-<main class="content container" v-if="productLoading">
-<img :src="SPINNER_IMG_URL" alt="Прелоадер">
-</main>
+
+    <BaseLoadingIndicator class="content container"  v-if="productLoading" :loading="productLoading" />
+
 <main class="content container" v-else-if="!productData">
   Не удалось загрузить товар
 </main>
@@ -111,9 +111,8 @@
 <div v-show="productAdded">
   Товар добавлен в корзину
 </div>
-<div v-show="productAddSending">
- <img :src="SPINNER_IMG_URL" alt="Прелоадер">
-</div>
+
+    <BaseLoadingIndicator :loading="productAddSending" />
 
           </form>
         </div>
@@ -178,14 +177,14 @@
 <script>
 import gotoPage from '@/helpers/gotoPage';
 import ProductAmount from '@/components/ProductAmount.vue';
-import { API_BASE_URL, SPINNER_IMG_URL } from '@/config';
+import { API_BASE_URL } from '@/config';
+import BaseLoadingIndicator from '@/components/BaseLoadingIndicator.vue';
 import axios from 'axios';
 import { mapActions } from 'vuex';
 
 export default {
   data() {
     return {
-      SPINNER_IMG_URL,
       productAmount: 1,
       productData: null,
       productLoading: false,
@@ -194,7 +193,7 @@ export default {
       productAddSending: false,
     };
   },
-  components: { ProductAmount },
+  components: { ProductAmount, BaseLoadingIndicator },
   computed: {
     product() {
       return {
