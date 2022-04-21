@@ -38,7 +38,7 @@
 
         <BaseBasketList
           :cartProductsData="orderData.basket.items"
-          :cartTotalAmount="totalProductsNumber(orderData.basket.items.length)"
+          :cartTotalAmount="totalProductsNumber(orderedProductsAmount)"
           :cartTotalPrice="$filters.numberFormat(orderData.totalPrice)"
         />
       </form>
@@ -55,6 +55,11 @@ export default {
     return {
       orderData: {},
     };
+  },
+  computed: {
+    orderedProductsAmount() {
+      return this.orderData.basket.items.reduce((acc, item) => (acc + item.quantity), 0);
+    },
   },
   components: { BaseBasketList, OrderInfoField },
   methods: {
