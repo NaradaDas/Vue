@@ -37,7 +37,7 @@
           </p>
 
           <router-link
-            v-if="cartData"
+            v-if="productsInBasket"
             tag="button"
             :to="{ name: 'order' }"
             class="cart__button button button--primery"
@@ -58,6 +58,7 @@ export default {
   data() {
     return {
       cartData: null,
+      productsInBasket: false,
     };
   },
   methods: {
@@ -85,6 +86,13 @@ export default {
     this.loadData();
   },
   watch: {
+    cartData() {
+      if (this.cartData.length > 0) {
+        this.productsInBasket = true;
+      } else {
+        this.productsInBasket = false;
+      }
+    },
     cartProductsData() {
       this.cartData = this.cartProductsData;
     },
