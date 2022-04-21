@@ -16,7 +16,7 @@ const store = createStore({
   },
   mutations: {
     updateOrderInfo(state, orederInfo) {
-state.orderInfo = orederInfo;
+      state.orderInfo = orederInfo;
     },
     resetCard(state) {
       state.cartProducts = [];
@@ -61,7 +61,7 @@ state.orderInfo = orederInfo;
     },
     changeOrderLoadingStatus(state) {
       state.sendOrderLoading = !state.sendOrderLoading;
-    }
+    },
   },
   getters: {
     cartDetailProducts(state) {
@@ -92,15 +92,15 @@ state.orderInfo = orederInfo;
   actions: {
     loadOrderInfo(context, orderId) {
       return axios
-      .get(`${API_BASE_URL}/api/orders/${orderId}`, {
-        params: {
-          userAccessKey: context.state.userAccessKey,
-        },
-      })
-      .then(res => {
-        context.commit('updateOrderInfo', res.data)
-        return res.data;
-      } )
+        .get(`${API_BASE_URL}/api/orders/${orderId}`, {
+          params: {
+            userAccessKey: context.state.userAccessKey,
+          },
+        })
+        .then((res) => {
+          context.commit('updateOrderInfo', res.data);
+          return res.data;
+        });
     },
     loadCart(context) {
       context.commit('turnOfCartLoadingFailed');
@@ -187,9 +187,8 @@ state.orderInfo = orederInfo;
         params: {
           userAccessKey: context.state.userAccessKey,
         },
-      }
-      )
-        .then(res => {
+      })
+        .then((res) => {
           context.commit('resetCard');
           context.commit('updateOrderInfo', res.data);
           context.commit('changeOrderLoadingStatus');

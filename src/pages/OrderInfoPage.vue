@@ -2,7 +2,7 @@
   <main class="content container">
     <div class="content__top">
       <ul class="breadcrumbs">
-       <li class="breadcrumbs__item">
+        <li class="breadcrumbs__item">
           <router-link class="breadcrumbs__link" :to="{ name: 'main' }"> Каталог </router-link>
         </li>
         <li class="breadcrumbs__item">
@@ -13,7 +13,9 @@
         </li>
       </ul>
 
-      <h1 class="content__title">Заказ оформлен <span>№ {{ orderData.id }}</span></h1>
+      <h1 class="content__title">
+        Заказ оформлен <span>№ {{ orderData.id }}</span>
+      </h1>
     </div>
 
     <section class="cart">
@@ -26,12 +28,11 @@
           </p>
 
           <ul class="dictionary">
-          <OrderInfoField :title="'Получатель'" :value="orderData.name" />
-          <OrderInfoField :title="'Адрес доставки'" :value="orderData.address" />
-          <OrderInfoField :title="'Телефон'" :value="orderData.phone" />
-          <OrderInfoField :title="'Email'" :value="orderData.email" />
-          <OrderInfoField :title="'Способ оплаты'" :value="'картой при получении'" />
-
+            <OrderInfoField :title="'Получатель'" :value="orderData.name" />
+            <OrderInfoField :title="'Адрес доставки'" :value="orderData.address" />
+            <OrderInfoField :title="'Телефон'" :value="orderData.phone" />
+            <OrderInfoField :title="'Email'" :value="orderData.email" />
+            <OrderInfoField :title="'Способ оплаты'" :value="'картой при получении'" />
           </ul>
         </div>
 
@@ -63,9 +64,9 @@ export default {
     if (this.$store.state.orderInfo && this.$store.state.orderInfo.id === this.$route.params.id) {
       return;
     }
-    this.$store
-      .dispatch('loadOrderInfo', this.$route.params.id)
-      .then((res) => (this.orderData = res));
+    this.$store.dispatch('loadOrderInfo', this.$route.params.id).then((res) => {
+      this.orderData = res;
+    });
   },
 };
 </script>

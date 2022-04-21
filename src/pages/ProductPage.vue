@@ -1,6 +1,6 @@
 <template lang="ru">
 
-    <BaseLoadingIndicator class="content container"  v-if="productLoading" :loading="productLoading" />
+<BaseLoadingIndicator class="content container"  v-if="productLoading" :loading="productLoading" />
 
 <main class="content container" v-else-if="!productData">
   Не удалось загрузить товар

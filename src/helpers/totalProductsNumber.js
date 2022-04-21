@@ -1,12 +1,11 @@
 export default function countProductWordForms(totalAmount) {
-
   if (
     String(totalAmount) === '11'
     || String(totalAmount) === '12'
     || String(totalAmount) === '13'
     || String(totalAmount) === '14'
   ) {
-    return `${totalAmount} товаров`
+    return `${totalAmount} товаров`;
   }
   if (String(totalAmount).endsWith('1')) {
     return `${totalAmount} товар`;

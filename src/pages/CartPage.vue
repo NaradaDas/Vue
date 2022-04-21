@@ -14,13 +14,10 @@
       <span class="content__info"> {{ totalAmount }} </span>
     </div>
 
-
-
     <section class="cart">
       <form class="cart__form form" action="#" method="POST">
         <div class="cart__field">
-
-<BaseLoadingIndicator :loading="cartLoading" />
+          <BaseLoadingIndicator :loading="cartLoading" />
 
           <div v-show="cartLoadingFailed">Не удалось загрузить корзину товаров :(</div>
 
@@ -40,9 +37,9 @@
           </p>
 
           <router-link
-          v-if="cartData"
+            v-if="cartData"
             tag="button"
-            :to="{name: 'order'}"
+            :to="{ name: 'order' }"
             class="cart__button button button--primery"
             type="submit"
             >Оформить заказ</router-link
@@ -55,7 +52,6 @@
 <script>
 import { mapGetters, mapActions, mapState } from 'vuex';
 import CartItem from '@/components/CartItem.vue';
-import totalProductsNumber from '@/helpers/totalProductsNumber';
 import BaseLoadingIndicator from '@/components/BaseLoadingIndicator.vue';
 
 export default {

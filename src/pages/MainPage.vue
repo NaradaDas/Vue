@@ -17,7 +17,6 @@
         />
       </aside>
       <section class="catalog">
-
         <BaseLoadingIndicator :loading="productsLoading" />
 
         <div v-if="productsLoadingFailed">
@@ -42,7 +41,6 @@ import { API_BASE_URL, SPINNER_IMG_URL } from '@/config';
 import axios from 'axios';
 
 export default {
-  components: { ProductList, BasePagination, ProductFilter, BaseLoadingIndicator },
   data() {
     return {
       SPINNER_IMG_URL,
@@ -56,6 +54,12 @@ export default {
       productsLoading: false,
       productsLoadingFailed: false,
     };
+  },
+  components: {
+    ProductList,
+    BasePagination,
+    ProductFilter,
+    BaseLoadingIndicator,
   },
   methods: {
     loadProducts() {

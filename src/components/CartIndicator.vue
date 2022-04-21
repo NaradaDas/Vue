@@ -1,6 +1,5 @@
 <template lang="">
   <router-link class="header__cart" :to="{ name: 'cart' }" aria-label="Корзина с товарами">
-
     <BaseLoadingIndicator v-if="loadingStatus" :loading="loadingStatus" />
     <div v-else>
       <svg width="30" height="21" fill="currentColor">
@@ -26,7 +25,7 @@ export default {
   computed: {
     ...mapState(['addProductLoading', 'cartLoading', 'cartProducts', 'sendOrderLoading']),
   },
-   methods: {
+  methods: {
     syncWithStore() {
       this.loadingStatus = this.cartLoading || this.addProductLoading || this.sendOrderLoading;
       this.cartProductQuantity = this.cartProducts.length;

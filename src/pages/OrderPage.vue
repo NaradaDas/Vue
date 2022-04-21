@@ -18,21 +18,49 @@
     </div>
 
     <section class="cart">
-
       <form class="cart__form form" action="#" method="POST" @submit.prevent="order">
         <div class="cart__field">
           <div class="cart__data">
+            <BaseFormText
+              :id="'0'"
+              :title="'ФИО'"
+              :placeholder="'Введите ваше полное имя'"
+              :error="formError.name"
+              v-model="formData.name"
+            />
 
-          <BaseFormText :title="'ФИО'" :placeholder="'Введите ваше полное имя'" :error="formError.name" v-model="formData.name" />
+            <BaseFormText
+              :id="'1'"
+              :title="'Адрес доставки'"
+              :placeholder="'Введите ваш адрес'"
+              :error="formError.address"
+              v-model="formData.address"
+            />
 
-           <BaseFormText :title="'Адрес доставки'" :placeholder="'Введите ваш адрес'" :error="formError.address" v-model="formData.address" />
+            <BaseFormText
+              :id="'2'"
+              :title="'Телефон'"
+              :placeholder="'Введите ваш телефон'"
+              :error="formError.phone"
+              v-model="formData.phone"
+            />
 
-           <BaseFormText :title="'Телефон'" :placeholder="'Введите ваш телефон'" :error="formError.phone" v-model="formData.phone" />
+            <BaseFormText
+              :id="'3'"
+              :title="'Email'"
+              :placeholder="'Введи ваш Email'"
+              :error="formError.email"
+              v-model="formData.email"
+            />
 
-            <BaseFormText :title="'Email'" :placeholder="'Введи ваш Email'" :error="formError.email" v-model="formData.email" />
-
-          <BaseFormTextarea :title="'Комментарий к заказу'" :placeholder="'Ваши пожелания'" :error="formError.comment" v-model="formData.comment" />
-</div>
+            <BaseFormTextarea
+              :id="'4'"
+              :title="'Комментарий к заказу'"
+              :placeholder="'Ваши пожелания'"
+              :error="formError.comment"
+              v-model="formData.comment"
+            />
+          </div>
 
           <div class="cart__options">
             <h3 class="cart__title">Доставка</h3>
@@ -94,11 +122,15 @@
           </div>
         </div>
 
-<BaseBasketList :cartProductsData="cartProductsData" :cartTotalAmount="cartTotalAmount" :cartTotalPrice="$filters.numberFormat(cartTotalPrice)" />
+        <BaseBasketList
+          :cartProductsData="cartProductsData"
+          :cartTotalAmount="cartTotalAmount"
+          :cartTotalPrice="$filters.numberFormat(cartTotalPrice)"
+        />
 
         <div class="cart__error form__error-block" v-if="formErrorMessage">
           <h4>Заявка не отправлена!</h4>
-          <p> {{ formErrorMessage }}</p>
+          <p>{{ formErrorMessage }}</p>
         </div>
       </form>
     </section>
@@ -108,7 +140,9 @@
 import BaseFormText from '@/components/BaseFormText.vue';
 import BaseFormTextarea from '@/components/BaseFormTextarea.vue';
 import BaseBasketList from '@/components/BaseBasketList.vue';
-import { mapActions, mapState, mapGetters } from 'vuex';
+import {
+  mapActions, mapState, mapGetters, mapMutations,
+} from 'vuex';
 
 export default {
   data() {
@@ -119,21 +153,25 @@ export default {
       cartList: null,
     };
   },
-  components: { BaseFormText, BaseFormTextarea, BaseBasketList},
+  components: { BaseFormText, BaseFormTextarea, BaseBasketList },
   methods: {
+    ...mapMutations(['changeOrderLoadingStatus']),
     ...mapActions(['sendOrder']),
     order() {
       this.formErrorMessage = '';
-this.sendOrder(this.formData).then(res => this.$router.push({name: 'orderInfo', params: {id: res.data.id}})).catch(error => {
-this.formError = error.response.data.error.request || {};
-this.formErrorMessage = error.response.data.error.message;
-})
+      this.sendOrder(this.formData)
+        .then((res) => this.$router.push({ name: 'orderInfo', params: { id: res.data.id } }))
+        .catch((error) => {
+          this.changeOrderLoadingStatus();
+          this.formError = error.response.data.error.request || {};
+          this.formErrorMessage = error.response.data.error.message;
+        });
     },
   },
   computed: {
     ...mapState(['cartProductsData']),
     ...mapGetters(['cartTotalPrice', 'cartTotalAmount']),
   },
-}
+};
 </script>
 <style lang=""></style>

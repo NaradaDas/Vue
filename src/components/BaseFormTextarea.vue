@@ -1,8 +1,9 @@
 <template lang="">
- <BaseFormField :title="title" :error="error">
+ <BaseFormField  :title="title" :error="error">
+ <!-- eslint-disable-next-line -->
                <textarea
                 v-model="dataValue"
-                id="comments"
+
                 class="form__input form__input--area"
                 name="comments"
                 :placeholder="placeholder"
@@ -10,11 +11,11 @@
 </BaseFormField>
 </template>
 <script>
-import formFieldMixin from '@/mixins/formFieldMixin.js';
+import formFieldMixin from '@/mixins/formFieldMixin';
 
 export default {
   mixins: [formFieldMixin],
-}
+};
 </script>
 <style lang="">
 
