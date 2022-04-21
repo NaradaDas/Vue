@@ -43,7 +43,7 @@ export default {
           productId: this.item.product.id,
           amount: value,
         });
-        this.$emit('update:item', { ...this.item, quantity: value });
+        return value;
       },
     },
     product() {
