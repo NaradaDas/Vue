@@ -16,5 +16,3 @@ module.exports = {
     'linebreak-style': 0,
   },
 };
-
-/* eslint-disable */
