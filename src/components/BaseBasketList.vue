@@ -1,9 +1,10 @@
 <template lang="">
-  <div>
+
     <div class="cart__block">
       <ul class="cart__orders">
         <BaseBasketListItem
           v-for="item in cartProductsData"
+          :key="item.product.id"
           :title="item.product.title"
           :price="item.price"
           :id="item.product.id"
@@ -26,7 +27,7 @@
       </button>
     </div>
     <BaseLoadingIndicator class="content container" :loading="sendOrderLoading" />
-  </div>
+
 </template>
 <script>
 import BaseBasketListItem from '@/components/BaseBasketListItem.vue';

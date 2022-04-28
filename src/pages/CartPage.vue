@@ -38,11 +38,14 @@
 
           <router-link
             v-if="productsInBasket"
-            tag="button"
             :to="{ name: 'order' }"
-            class="cart__button button button--primery"
-            type="submit"
-            >Оформить заказ</router-link
+            custom
+            v-slot="{navigate}"
+            >
+            <button class="cart__button button button--primery"
+             type="submit"
+             @click="navigate">Оформить заказ</button>
+            </router-link
           >
         </div>
       </form>

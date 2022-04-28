@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <header class="header">
+
+    <header v-if="!isSomeOpen" class="header">
       <div class="header__wrapper container">
         <span class="header__info">Каталог</span>
         <a class="header__logo" href="#">
@@ -16,7 +16,7 @@
       </div>
     </header>
 
-    <router-view />
+    <router-view :key="$route.fullPath" />
 
     <footer class="footer">
       <div class="footer__wrapper container">
@@ -98,14 +98,25 @@
         <span class="footer__copyright"> © 2020 Технозавррр </span>
       </div>
     </footer>
-  </div>
+    <div id="teleport-target" >
+
+    </div>
+
 </template>
 
 <script>
 import CartIndicator from '@/components/CartIndicator.vue';
 import { mapActions, mapMutations } from 'vuex';
+import useModal from '@/hooks/useModal'
 
 export default {
+  setup() {
+const { isSomeOpen } = useModal();
+console.log(isSomeOpen.value)
+return {
+  isSomeOpen
+}
+  },
   components: { CartIndicator },
   created() {
     const userAccessKey = localStorage.getItem('userAccessKey');

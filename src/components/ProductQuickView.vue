@@ -1,31 +1,16 @@
 <template lang="ru">
 
-<BaseLoadingIndicator class="content container"  v-if="productStatus.isLoading" :loading="productStatus.isLoading" />
+<BaseLoadingIndicator   v-if="productStatus.isLoading" :loading="productStatus.isLoading" />
 
-<main class="content container" v-else-if="productStatus.isFailed">
+<div  v-else-if="productStatus.isFailed">
   Не удалось загрузить товар
-</main>
-  <main class="content container" v-else>
-    <div class="content__top">
-      <ul class="breadcrumbs">
-        <li class="breadcrumbs__item">
-          <router-link class="breadcrumbs__link" :to="{ name: 'main' }"> Каталог </router-link>
-        </li>
-        <li class="breadcrumbs__item">
-          <router-link class="breadcrumbs__link" :to="{ name: 'main' }">
-            {{ category.title }}
-          </router-link>
-        </li>
-        <li class="breadcrumbs__item">
-          <a class="breadcrumbs__link"> {{ product.title }} </a>
-        </li>
-      </ul>
-    </div>
+</div>
+  <div  v-else>
 
     <section class="item">
       <div class="item__pics pics">
         <div class="pics__wrapper">
-          <img width="570" height="570" :src="product.image.file.url" :alt="product.title" />
+          <img width="570" height="570" :src="product.image.file.url" alt="product.title" />
         </div>
       </div>
 
@@ -176,35 +161,35 @@
         </div>
       </div>
     </section>
-  </main>
+  </div>
 </template>
+
+
 <script>
 import BaseModal from '@/components/BaseModal.vue';
 import ProductAmount from '@/components/ProductAmount.vue';
 import BaseLoadingIndicator from '@/components/BaseLoadingIndicator.vue';
 import {  useStore } from 'vuex';
 import { defineComponent, ref, } from 'vue';
-import { useRoute } from 'vue-router';
 import useProduct from '@/hooks/useProduct';
 
 export default defineComponent({
+   props: {
+    productId: { type: [Number, String], required: true },
+  },
   components: {
 BaseModal,
 BaseLoadingIndicator,
 ProductAmount,
   },
-  setup() {
+  setup(props) {
     const $store  = useStore();
-const $route = useRoute();
 const { product, category, fetchProduct, status: productStatus, colors, productAmount, doAddToCart } = useProduct();
-
-   fetchProduct($route.params.id);
-   const addProduct = () => {
-doAddToCart($route.params.id)
+ const addProduct = () => {
+doAddToCart(props.productId)
    }
-
+   fetchProduct(props.productId);
     return {
-
 productAmount,
 productData: product,
 productStatus,
@@ -216,3 +201,9 @@ doAddToCart: addProduct,
   }
 });
 </script>
+
+<style >
+.item {
+  grid-template-columns: 1fr;
+}
+</style>
