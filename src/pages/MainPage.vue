@@ -16,6 +16,7 @@
           v-model:page="page"
         />
       </aside>
+
       <section class="catalog">
         <BaseLoadingIndicator :loading="productsLoading" />
 
