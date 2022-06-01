@@ -1,24 +1,5 @@
-# second
+# I've wroten this code while stidied course "JavaScript-framework Vue.js" by Skillbox.
+## This is a web-market, I used Vue3 and axios here.
 
-## Project setup
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+###Clone and write in terminal _npm run serve_.
+### You can see this work on [GitHub-pages]([https://cli.vuejs.org/config/](https://nikita-bondarenko.github.io/vue-technozavr/#/)) also.
