@@ -1,3 +1,4 @@
+
 # Web-market "TECHNOZAVR".
 
 ## Project setup
@@ -24,3 +25,5 @@ npm run lint
 ### You can filter products by price, paginate catalog, view product's data by click on title or image.
 ### It's also posible to put a product into and delete it from basket. Just checkout your order and see form-validation and usable hints.
 ## View this project on [GitHub-pages](https://nikita-bondarenko.github.io/vue-technozavr/#/).
+
+
